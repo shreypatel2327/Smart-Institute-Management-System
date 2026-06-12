@@ -1,0 +1,738 @@
+i want make one project using spring boot and react ( but not use typescript and next js) and database MySQL in my localsystem . 
+
+you give me prompt which prompt i give antigravity to create app ( give me prompt in markdown language ) 
+
+1. Student Portal 
+	a. student login
+	b. feel up inquiry form
+		-fields : first name , middle name , last name , city , mobile number , father's occupation , father's mobile number , mother's occupation , mother's mobile number , reference (news paper , social media ads , friends/relatives , other - please specify)
+	c. can view their time table
+	d. notifications
+	e. view & download their certificates
+	f. join the online class (using jitsi)
+	g. download material (pdf, csv, xlsx or any other format)
+	h. view video tutorials 
+	i. ide integration to practice computer engineering subjects like SQL , java , c++ , python etc.
+	j. can give faculty feed back (rating) 
+		- prompted by the app to submit the feedback on weekly basis
+		- feedback parameters : topic explanation , subject knowledge etc
+
+2. Faculty Portal
+	a. schedule (create) a lecture (meeting) in a batch 
+	b. start and end the class
+		- screen sharing enabled for teacher , mute/unmute students etc common features as zoom offers
+	c. upload material
+	d. upload video tutorials
+	e. create assignments
+	f. assign an assignment to a batch
+	g. send notification to students
+
+3. Admin Portal 
+	a. create student 
+	b. create faculty
+	c. create a new batch 
+		- can select number of students in a batch
+		- decide days & time of lectures
+		- assign subjects to a batch
+		- assign faculty for that subject etc
+	d. add students to a batch 
+	e. upload certificates manully
+	f. can auto-generate certificates for entire batch/selected students on single-click
+	g. send notification to students
+
+4. Admission Department Employee Portal : 
+	a. can track the inquiry 
+	b. can move an inquiry from any stage of the funnel to any stage directly
+
+		-funnel : lead / inquiry -> seminar -> bootcamp -> councelling -> follow up 1 -> follow up 2 -> follow up 3 -> follow up 4 -> follow up 5 -> admission 
+
+	c. generate different reports
+
+	d. can cheque fees status of students
+
+	e. revoke access of any student
+
+	f. send notification to students
+
+
+
+5. Super admin : 
+
+	a. can create admin
+
+	b. can create admission department employee
+
+	c. can create faculty
+
+	d. can remove/delete/de-activate an admin or an admission department employee or a faculty
+
+	e. fees dashboard 
+
+	f. batches dashboard 
+
+
+
+
+
+# The Antigravity Master Prompt — Student Management & Coaching Institute ERP
+
+## Role & Persona
+
+Act as a **Senior Full Stack Developer Mentor** helping a fresher build a complete production-style application using:
+
+* Frontend: React.js (JavaScript only, NOT TypeScript)
+* Backend: Spring Boot
+* Database: MySQL (running on localhost)
+* Authentication: JWT Authentication
+* API Style: REST APIs
+* Build Tool: Maven
+* State Management: Context API or Redux Toolkit (simple implementation)
+* Styling: Tailwind CSS
+* Video Meetings: Jitsi Meet Integration
+* Code Editor IDE Feature: Monaco Editor
+* File Uploads: Spring Boot Multipart
+* Architecture: Clean folder structure and beginner-friendly coding style
+
+The project must be written in a way that a fresher/junior developer can understand easily.
+
+Avoid:
+
+* Complex architecture
+* Microservices
+* Kubernetes
+* Docker
+* TypeScript
+* Next.js
+* Over-engineering
+* Advanced design patterns
+
+Use:
+
+* Clean naming
+* Proper comments
+* Reusable components
+* Modular structure
+* Easy-to-understand APIs
+* Step-by-step implementation
+
+---
+
+# Project Name
+
+## Smart Institute Management System
+
+A complete institute/coaching management portal with multiple role-based dashboards.
+
+---
+
+# Tech Stack
+
+## Frontend
+
+* React.js (JavaScript only)
+* React Router DOM
+* Axios
+* Tailwind CSS
+* React Toastify
+* Context API or Redux Toolkit
+* Jitsi Meet External API
+* Monaco Editor
+* Chart.js
+
+## Backend
+
+* Java Spring Boot
+* Spring Security
+* JWT Authentication
+* Spring Data JPA
+* Hibernate
+* Lombok
+* MySQL
+* Maven
+
+## Database
+
+MySQL running locally.
+
+Example:
+
+* Database Name: institute_management
+* Username: root
+* Password: TIGER
+
+---
+
+# User Roles
+
+Implement complete authentication and authorization for:
+
+1. Student
+2. Faculty
+3. Admin
+4. Admission Department Employee
+5. Super Admin
+
+Use role-based route protection in frontend and backend.
+
+---
+
+# Authentication Features
+
+Implement:
+
+* Login
+* Logout
+* JWT token generation
+* Refresh-safe authentication
+* Password hashing using BCrypt
+* Protected routes
+* Role-based access control
+* Session persistence
+
+---
+
+# Backend Requirements
+
+Create a complete Spring Boot backend with:
+
+## Layers
+
+* Controller
+* Service
+* Repository
+* DTO
+* Entity
+* Security
+* Config
+* Exception Handling
+
+Use proper package structure.
+
+---
+
+# Database Tables / Entities
+
+Create entities and relationships for:
+
+* User
+* Role
+* Student
+* Faculty
+* Batch
+* Subject
+* Lecture
+* Notification
+* Assignment
+* AssignmentSubmission
+* Inquiry
+* Certificate
+* StudyMaterial
+* VideoTutorial
+* Feedback
+* Attendance
+* Fees
+* OnlineClass
+* AdmissionTracking
+* Timetable
+
+Use proper relationships:
+
+* OneToMany
+* ManyToOne
+* ManyToMany
+
+Include:
+
+* createdAt
+* updatedAt
+* status fields
+
+---
+
+# FRONTEND REQUIREMENTS
+
+Create a modern responsive frontend using React + Tailwind CSS.
+
+Include:
+
+* Responsive sidebar
+* Navbar
+* Dashboard cards
+* Tables
+* Search
+* Filters
+* Pagination
+* Modal forms
+* Toast notifications
+* Loading spinners
+* Protected routes
+
+---
+
+# MODULES
+
+# 1. STUDENT PORTAL
+
+## Features
+
+### Authentication
+
+* Student login
+* JWT-based authentication
+
+### Inquiry Form
+
+Fields:
+
+* First Name
+* Middle Name
+* Last Name
+* City
+* Mobile Number
+* Father's Occupation
+* Father's Mobile Number
+* Mother's Occupation
+* Mother's Mobile Number
+* Reference Source
+
+Reference options:
+
+* Newspaper
+* Social Media Ads
+* Friends/Relatives
+* Other - please specify
+
+### Timetable
+
+* View lecture timetable
+* Subject-wise schedule
+
+### Notifications
+
+* View notifications from faculty/admin
+
+### Certificates
+
+* View certificates
+* Download certificates as PDF
+
+### Online Class
+
+Integrate Jitsi Meet:
+
+* Join class button
+* Meeting room support
+
+### Study Material
+
+* Download PDFs
+* Download CSV
+* Download XLSX
+* Download any other format
+
+### Video Tutorials
+
+* Stream uploaded tutorial videos
+
+### IDE Integration
+
+Use Monaco Editor.
+
+Support:
+
+* SQL
+* C
+* Java
+* Python
+* C++
+* JavaScript
+
+Features:
+
+* Code editor
+* Theme switching
+* Run button UI only (backend execution optional)
+
+### Faculty Feedback
+
+Weekly feedback prompt.
+
+Parameters:
+
+* Topic Explanation
+* Subject Knowledge
+* Communication Skills
+* Practical Knowledge
+* Doubt Solving
+
+Use:
+
+* Rating system
+* Comments
+
+---
+
+# 2. FACULTY PORTAL
+
+## Features
+
+### Lecture Management
+
+* Schedule lecture
+* Assign batch
+* Assign subject
+* Start class
+* End class
+
+### Online Class Features
+
+Using Jitsi:
+
+* Screen sharing
+* Mute/unmute
+* Camera controls
+* Chat support
+
+### Upload Materials
+
+* PDF
+* DOCX
+* XLSX
+* any other format
+
+### Upload Video Tutorials
+
+### Assignments
+
+* Create assignment
+* Set deadline
+* Upload files
+
+### Batch Assignment
+
+* Assign assignment to batch
+
+### Notifications
+
+* Send notifications to students
+
+---
+
+# 3. ADMIN PORTAL
+
+## Features
+
+### Student Management
+
+* Create student
+* Edit student
+* Delete student
+
+### Faculty Management
+
+* Create faculty
+* Edit faculty
+* Delete faculty
+
+### Batch Management
+
+* Create batch
+* Set lecture days
+* Set timings
+* Assign subjects
+* Assign faculty
+* Set batch strength
+
+### Student Batch Mapping
+
+* Add/remove students
+
+### Certificate Management
+
+* Upload certificates manually
+* Auto-generate certificates
+
+Generate:
+
+* Single student certificate
+* Entire batch certificate
+
+Generate PDF certificates dynamically.
+
+### Notifications
+
+* Send notifications
+
+---
+
+# 4. ADMISSION DEPARTMENT PORTAL
+
+## Features
+
+### Inquiry Tracking
+
+Track inquiry stages:
+
+* Lead
+* Inquiry
+* Seminar
+* Bootcamp
+* Counselling
+* Follow Up 1
+* Follow Up 2
+* Follow Up 3
+* Follow Up 4
+* Follow Up 5
+* Admission
+
+Allow moving inquiry to any stage directly.
+
+### Reports
+
+Generate:
+
+* Daily reports
+* Monthly reports
+* Admission conversion reports
+* Funnel analytics
+
+### Fees Status
+
+* Check fees
+* Pending fees
+* Paid fees
+
+### Student Access
+
+* Revoke access
+* Activate/deactivate account
+
+### Notifications
+
+* Send notifications
+
+---
+
+# 5. SUPER ADMIN PORTAL
+
+## Features
+
+### Admin Management
+
+* Create admin
+* Update admin
+* Deactivate admin
+
+### Faculty Management
+
+* Create faculty
+* Remove faculty
+
+### Admission Employee Management
+
+* Create employee
+* Remove employee
+* Activate/deactivate employee
+
+### Dashboards
+
+#### Fees Dashboard
+
+Include:
+
+* Total fees collected
+* Pending fees
+* Monthly revenue
+
+#### Batch Dashboard
+
+Include:
+
+* Total batches
+* Active batches
+* Student count
+* Faculty count
+
+Use charts with Chart.js.
+
+---
+
+# FILE UPLOAD REQUIREMENTS
+
+Implement:
+
+* Secure file uploads
+* Unique filenames
+* File type validation
+* File size validation
+
+Store uploads locally.
+
+Folders:
+
+* certificates/
+* materials/
+* assignments/
+* videos/
+
+---
+
+# API REQUIREMENTS
+
+Generate complete REST APIs for:
+
+* Authentication
+* Students
+* Faculty
+* Batches
+* Assignments
+* Notifications
+* Certificates
+* Inquiry Tracking
+* Fees
+* Timetable
+
+Include:
+
+* Pagination
+* Search
+* Filtering
+* Validation
+* Proper HTTP status codes
+
+---
+
+# SECURITY REQUIREMENTS
+
+Implement:
+
+* JWT Security
+* BCrypt password encryption
+* Route protection
+* CORS configuration
+* Input validation
+* Exception handling
+
+---
+
+# DASHBOARDS
+
+Create modern dashboards for all roles.
+
+Include:
+
+* Cards
+* Charts
+* Statistics
+* Recent activity
+* Notifications
+* Tables
+
+---
+
+# MYSQL REQUIREMENTS
+
+Use MySQL on localhost.
+
+Provide:
+
+* application.properties configuration
+* Database schema
+* Table relationships
+* Sample seed data
+
+---
+
+# PROJECT STRUCTURE
+
+Generate complete folder structures for:
+
+* Frontend
+* Backend
+
+Explain:
+
+* Each folder purpose
+* Each file purpose
+
+---
+
+# DEVELOPMENT APPROACH
+
+Build the project in phases.
+
+## Phase 1
+
+Backend setup + authentication
+
+## Phase 2
+
+Frontend setup + login system
+
+## Phase 3
+
+Role-based dashboards
+
+## Phase 4
+
+Student portal
+
+## Phase 5
+
+Faculty portal
+
+## Phase 6
+
+Admin portal
+
+## Phase 7
+
+Admission portal
+
+## Phase 8
+
+Super admin portal
+
+## Phase 9
+
+Jitsi integration
+
+## Phase 10
+
+Certificate generation
+
+## Phase 11
+
+Testing and deployment
+
+---
+
+# IMPORTANT INSTRUCTIONS
+
+1. Use beginner-friendly coding style.
+2. Add comments everywhere.
+3. Explain each major implementation.
+4. Generate clean UI.
+5. Avoid TypeScript completely.
+6. Do NOT use Next.js.
+7. Use React.js with JavaScript only.
+8. Use Spring Boot Monolith architecture.
+9. Use MySQL on localhost only.
+10. Generate production-style but understandable code.
+
+---
+
+# OUTPUT FORMAT
+
+For every feature provide:
+
+1. Folder structure
+2. Backend code
+3. Frontend code
+4. Database schema
+5. API endpoints
+6. Step-by-step explanation
+7. Testing instructions
+8. Common errors and fixes
+
+Generate the project module-by-module instead of dumping everything together.
