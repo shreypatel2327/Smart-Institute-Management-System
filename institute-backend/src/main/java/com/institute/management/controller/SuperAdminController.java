@@ -40,7 +40,7 @@ public class SuperAdminController {
     @Autowired
     PasswordEncoder encoder;
 
-    // 1. Staff Management (Create/Update/Activate Admin & Employee accounts)
+    // 1. Staff Management (Create/Update/Activate Admin accounts)
     @PostMapping("/staff")
     public ResponseEntity<?> createStaffUser(@RequestBody User staffRequest) {
         if (userRepository.existsByUsername(staffRequest.getUsername())) {
@@ -51,8 +51,8 @@ public class SuperAdminController {
         }
 
         Role role = staffRequest.getRole();
-        if (role != Role.ROLE_ADMIN && role != Role.ROLE_ADMISSION) {
-            return ResponseEntity.badRequest().body("Error: Super Admin can only register ADMIN or ADMISSION employees!");
+        if (role != Role.ROLE_ADMIN) {
+            return ResponseEntity.badRequest().body("Error: Super Admin can only register ADMIN staff!");
         }
 
         User user = User.builder()
@@ -73,7 +73,6 @@ public class SuperAdminController {
     public ResponseEntity<List<User>> getAllStaff() {
         List<User> staff = new ArrayList<>();
         staff.addAll(userRepository.findByRole(Role.ROLE_ADMIN));
-        staff.addAll(userRepository.findByRole(Role.ROLE_ADMISSION));
         return ResponseEntity.ok(staff);
     }
 
@@ -95,30 +94,7 @@ public class SuperAdminController {
         return ResponseEntity.ok(userRepository.save(user));
     }
 
-    // 2. Fees Dashboard Financial Analytics
-    @GetMapping("/dashboard/fees")
-    public ResponseEntity<?> getFeesDashboardData() {
-        List<Fees> allFees = feesRepository.findAll();
-        double totalCollected = 0.0;
-        double totalPending = 0.0;
-
-        for (Fees fee : allFees) {
-            totalCollected += fee.getPaidAmount();
-            totalPending += fee.getPendingAmount();
-        }
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("totalFeesCollected", totalCollected);
-        data.put("totalPendingFees", totalPending);
-        data.put("monthlyRevenue", totalCollected * 0.4); // Mock monthly split
-        
-        // Month-wise billing trend mock for Chart.js
-        data.put("revenueLabels", List.of("Jan", "Feb", "Mar", "Apr", "May", "Jun"));
-        data.put("revenueValues", List.of(totalCollected * 0.1, totalCollected * 0.15, totalCollected * 0.12, 
-                                          totalCollected * 0.25, totalCollected * 0.18, totalCollected * 0.2));
-
-        return ResponseEntity.ok(data);
-    }
+    // 2. Fees Dashboard Financial Analytics - REMOVED
 
     // 3. Batch Dashboard Course/Student Analytics
     @GetMapping("/dashboard/batches")

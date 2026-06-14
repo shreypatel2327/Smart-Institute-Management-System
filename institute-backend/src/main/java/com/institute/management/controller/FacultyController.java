@@ -56,6 +56,9 @@ public class FacultyController {
     SubjectRepository subjectRepository;
 
     @Autowired
+    StudentRepository studentRepository;
+
+    @Autowired
     FileStorageService fileStorageService;
 
     private Faculty getCurrentFaculty() {
@@ -297,5 +300,30 @@ public class FacultyController {
     @GetMapping("/subjects")
     public ResponseEntity<List<Subject>> getSubjects() {
         return ResponseEntity.ok(subjectRepository.findAll());
+    }
+
+    @GetMapping("/materials")
+    public ResponseEntity<List<StudyMaterial>> getMyMaterials() {
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(userPrincipal.getId()).orElse(null);
+        return ResponseEntity.ok(studyMaterialRepository.findByUploadedBy(user));
+    }
+
+    @GetMapping("/videos")
+    public ResponseEntity<List<VideoTutorial>> getMyVideos() {
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(userPrincipal.getId()).orElse(null);
+        return ResponseEntity.ok(videoTutorialRepository.findByUploadedBy(user));
+    }
+
+    @GetMapping("/my-students")
+    public ResponseEntity<List<Student>> getMyStudents() {
+        Faculty faculty = getCurrentFaculty();
+        List<Batch> batches = batchRepository.findByFaculty(faculty);
+        List<Student> students = new java.util.ArrayList<>();
+        for (Batch batch : batches) {
+            students.addAll(studentRepository.findByBatch(batch));
+        }
+        return ResponseEntity.ok(students);
     }
 }

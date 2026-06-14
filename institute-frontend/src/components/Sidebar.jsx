@@ -23,7 +23,10 @@ const Sidebar = () => {
             { path: '/student/feedback', label: 'Faculty Feedback', icon: '✍️' },
             { path: '/student/assignments', label: 'My Assignments', icon: '📝' },
             { path: '/student/certificates', label: 'My Certificates', icon: '🎓' },
-            { path: '/inquiry-form', label: 'Submit Inquiry', icon: '❓' }
+            { path: '/shared/dynamic-forms', label: 'Dynamic Forms', icon: '📋' },
+            { path: '/shared/quizzes', label: 'Online Quizzes', icon: '📝' },
+            { path: '/shared/complaints-leaves', label: 'Complaints & Leaves', icon: '😠' },
+            { path: '/shared/broadcaster', label: 'Message Desk', icon: '📢' }
         ],
         ROLE_FACULTY: [
             { path: '/faculty', label: 'Dashboard', icon: '📊' },
@@ -32,7 +35,10 @@ const Sidebar = () => {
             { path: '/faculty/videos', label: 'Video Uploads', icon: '📹' },
             { path: '/faculty/assignments', label: 'Assignments Desk', icon: '📝' },
             { path: '/faculty/online-classes', label: 'Schedule Jitsi Meeting', icon: '🌐' },
-            { path: '/faculty/notifications', label: 'Broadcaster', icon: '📢' }
+            { path: '/shared/broadcaster', label: 'Broadcaster Desk', icon: '📢' },
+            { path: '/shared/ai-assistant', label: 'AI Assistant Content', icon: '🔮' },
+            { path: '/shared/quizzes', label: 'Quizzes Desk', icon: '📝' },
+            { path: '/shared/complaints-leaves', label: 'Complaints & Leaves', icon: '😠' }
         ],
         ROLE_ADMIN: [
             { path: '/admin', label: 'Dashboard', icon: '📊' },
@@ -41,19 +47,21 @@ const Sidebar = () => {
             { path: '/admin/batches', label: 'Manage Batches', icon: '🏫' },
             { path: '/admin/mapping', label: 'Batch Mapping', icon: '🔗' },
             { path: '/admin/certificates', label: 'Certificates Center', icon: '🎓' },
-            { path: '/admin/notifications', label: 'Broadcast System', icon: '📢' }
-        ],
-        ROLE_ADMISSION: [
-            { path: '/admission', label: 'Dashboard', icon: '📊' },
-            { path: '/admission/pipeline', label: 'Lead Funnel Pipeline', icon: '⚡' },
-            { path: '/admission/fees', label: 'Fees Audits', icon: '💵' },
-            { path: '/admission/access', label: 'Revoke/Activate Access', icon: '🔐' }
+            { path: '/shared/broadcaster', label: 'Broadcast Center', icon: '📢' },
+            { path: '/shared/ai-assistant', label: 'AI Generator', icon: '🔮' },
+            { path: '/shared/dynamic-forms', label: 'Dynamic Forms', icon: '📋' },
+            { path: '/shared/quizzes', label: 'Quizzes Desk', icon: '📝' },
+            { path: '/shared/complaints-leaves', label: 'Complaints & Leaves', icon: '😠' }
         ],
         ROLE_SUPER_ADMIN: [
             { path: '/superadmin', label: 'Dashboard', icon: '📊' },
             { path: '/superadmin/staff', label: 'Manage Admin/Staff', icon: '👥' },
-            { path: '/superadmin/fees-chart', label: 'Revenue Visualizer', icon: '💰' },
-            { path: '/superadmin/batch-chart', label: 'Batch Distribution', icon: '📈' }
+            { path: '/admin/students', label: 'Institute Students', icon: '👥' },
+            { path: '/superadmin/batch-chart', label: 'Batch Distribution', icon: '📈' },
+            { path: '/superadmin/attendance-reports', label: 'Attendance & Analytics', icon: '📈' },
+            { path: '/shared/broadcaster', label: 'Broadcast Center', icon: '📢' },
+            { path: '/shared/ai-assistant', label: 'AI Form Generator', icon: '🔮' },
+            { path: '/shared/complaints-leaves', label: 'Complaints & Leaves', icon: '😠' }
         ]
     };
 

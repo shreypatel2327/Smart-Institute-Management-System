@@ -3,6 +3,7 @@ import DashboardLayout from '../../components/DashboardLayout';
 import { api } from '../../context/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 const ScheduleClass = () => {
     const [classes, setClasses] = useState([]);
@@ -194,14 +195,12 @@ const ScheduleClass = () => {
                                     </div>
 
                                     <div>
-                                        <a
-                                            href={item.meetingLink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5"
+                                        <Link
+                                            to={`/shared/online-classroom?meetingId=${item.meetingId}&title=${encodeURIComponent(item.title)}`}
+                                            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 animate-pulse"
                                         >
                                             🚀 Start Classroom
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             ))}

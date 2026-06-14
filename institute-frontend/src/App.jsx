@@ -17,7 +17,6 @@ import OnlineClass from './pages/student/OnlineClass';
 import Feedback from './pages/student/Feedback';
 import Assignments from './pages/student/Assignments';
 import Certificates from './pages/student/Certificates';
-import InquiryForm from './pages/student/InquiryForm';
 
 // Faculty Portal Pages
 import FacultyDashboard from './pages/faculty/FacultyDashboard';
@@ -37,15 +36,20 @@ import Mapping from './pages/admin/Mapping';
 import CertificatesCenter from './pages/admin/CertificatesCenter';
 import AdminBroadcaster from './pages/admin/AdminBroadcaster';
 
-// Admission Portal Pages
-import AdmissionDashboard from './pages/admission/AdmissionDashboard';
-import Pipeline from './pages/admission/Pipeline';
-import FeesManager from './pages/admission/FeesManager';
-import RevokeAccess from './pages/admission/RevokeAccess';
+// Admission Portal Pages - REMOVED
 
 // Super Admin Portal Pages
 import SuperAdminDashboard from './pages/superadmin/SuperAdminDashboard';
 import StaffManagement from './pages/superadmin/StaffManagement';
+import AttendanceWorkingHoursReport from './pages/superadmin/AttendanceWorkingHoursReport';
+
+// Shared Protected Portals
+import ComplaintLeavePortal from './pages/shared/ComplaintLeavePortal';
+import AiAssistantInterface from './pages/shared/AiAssistantInterface';
+import DynamicFormsManager from './pages/shared/DynamicFormsManager';
+import QuizSystem from './pages/shared/QuizSystem';
+import EnhancedBroadcaster from './pages/shared/EnhancedBroadcaster';
+import MeetingSessionRoom from './pages/shared/MeetingSessionRoom';
 
 // Helper redirect component for base route /
 const HomeRedirect = () => {
@@ -57,7 +61,6 @@ const HomeRedirect = () => {
         case 'ROLE_STUDENT': return <Navigate to="/student" replace />;
         case 'ROLE_FACULTY': return <Navigate to="/faculty" replace />;
         case 'ROLE_ADMIN': return <Navigate to="/admin" replace />;
-        case 'ROLE_ADMISSION': return <Navigate to="/admission" replace />;
         case 'ROLE_SUPER_ADMIN': return <Navigate to="/superadmin" replace />;
         default: return <Navigate to="/login" replace />;
     }
@@ -70,7 +73,6 @@ function App() {
                 <Routes>
                     {/* Publicly white-listed routes */}
                     <Route path="/login" element={<Login />} />
-                    <Route path="/inquiry-form" element={<InquiryForm />} />
                     <Route path="/unauthorized" element={<Unauthorized />} />
 
                     {/* Base Route Redirection */}
@@ -105,17 +107,19 @@ function App() {
                     <Route path="/admin/certificates" element={<ProtectedRoute allowedRoles={['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><CertificatesCenter /></ProtectedRoute>} />
                     <Route path="/admin/notifications" element={<ProtectedRoute allowedRoles={['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><AdminBroadcaster /></ProtectedRoute>} />
 
-                    {/* Admission Protected Portals */}
-                    <Route path="/admission" element={<ProtectedRoute allowedRoles={['ROLE_ADMISSION', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><AdmissionDashboard /></ProtectedRoute>} />
-                    <Route path="/admission/pipeline" element={<ProtectedRoute allowedRoles={['ROLE_ADMISSION', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><Pipeline /></ProtectedRoute>} />
-                    <Route path="/admission/fees" element={<ProtectedRoute allowedRoles={['ROLE_ADMISSION', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><FeesManager /></ProtectedRoute>} />
-                    <Route path="/admission/access" element={<ProtectedRoute allowedRoles={['ROLE_ADMISSION', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><RevokeAccess /></ProtectedRoute>} />
-
                     {/* Super Admin Protected Portals */}
                     <Route path="/superadmin" element={<ProtectedRoute allowedRoles={['ROLE_SUPER_ADMIN']}><SuperAdminDashboard /></ProtectedRoute>} />
                     <Route path="/superadmin/staff" element={<ProtectedRoute allowedRoles={['ROLE_SUPER_ADMIN']}><StaffManagement /></ProtectedRoute>} />
-                    <Route path="/superadmin/fees-chart" element={<ProtectedRoute allowedRoles={['ROLE_SUPER_ADMIN']}><SuperAdminDashboard /></ProtectedRoute>} />
                     <Route path="/superadmin/batch-chart" element={<ProtectedRoute allowedRoles={['ROLE_SUPER_ADMIN']}><SuperAdminDashboard /></ProtectedRoute>} />
+                    <Route path="/superadmin/attendance-reports" element={<ProtectedRoute allowedRoles={['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']}><AttendanceWorkingHoursReport /></ProtectedRoute>} />
+
+                    {/* Shared Portals for multiple roles */}
+                    <Route path="/shared/complaints-leaves" element={<ProtectedRoute allowedRoles={['ROLE_STUDENT', 'ROLE_FACULTY', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><ComplaintLeavePortal /></ProtectedRoute>} />
+                    <Route path="/shared/ai-assistant" element={<ProtectedRoute allowedRoles={['ROLE_FACULTY', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><AiAssistantInterface /></ProtectedRoute>} />
+                    <Route path="/shared/dynamic-forms" element={<ProtectedRoute allowedRoles={['ROLE_STUDENT', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><DynamicFormsManager /></ProtectedRoute>} />
+                    <Route path="/shared/quizzes" element={<ProtectedRoute allowedRoles={['ROLE_STUDENT', 'ROLE_FACULTY', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><QuizSystem /></ProtectedRoute>} />
+                    <Route path="/shared/broadcaster" element={<ProtectedRoute allowedRoles={['ROLE_STUDENT', 'ROLE_FACULTY', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}><EnhancedBroadcaster /></ProtectedRoute>} />
+                    <Route path="/shared/online-classroom" element={<ProtectedRoute allowedRoles={['ROLE_STUDENT', 'ROLE_FACULTY', 'ROLE_SUPER_ADMIN']}><MeetingSessionRoom /></ProtectedRoute>} />
 
                     {/* Fallback */}
                     <Route path="*" element={<Navigate to="/" replace />} />

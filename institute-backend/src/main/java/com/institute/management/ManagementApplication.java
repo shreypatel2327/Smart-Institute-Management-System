@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,7 +23,8 @@ public class ManagementApplication {
     }
 
     @Bean
-    public CommandLineRunner demoData(UserRepository userRepository,
+    public CommandLineRunner demoData(JdbcTemplate jdbcTemplate,
+                                     UserRepository userRepository,
                                      StudentRepository studentRepository,
                                      FacultyRepository facultyRepository,
                                      BatchRepository batchRepository,
@@ -32,6 +35,9 @@ public class ManagementApplication {
                                      TimetableRepository timetableRepository,
                                      PasswordEncoder encoder) {
         return args -> {
+            // Native update to convert stale ROLE_ADMISSION rows to a valid role
+            jdbcTemplate.execute("UPDATE users SET role = 'ROLE_ADMIN' WHERE role = 'ROLE_ADMISSION'");
+
             if (userRepository.count() == 0) {
                 System.out.println("No users found in database. Seeding initial role-based users...");
 
@@ -61,18 +67,7 @@ public class ManagementApplication {
                         .build();
                 userRepository.save(admin);
 
-                // 3. Seed Admission Department Employee
-                User admission = User.builder()
-                        .username("admission")
-                        .email("admission@institute.com")
-                        .password(encoder.encode("admission123"))
-                        .role(Role.ROLE_ADMISSION)
-                        .firstName("John")
-                        .lastName("Smith")
-                        .phone("7777777777")
-                        .status("ACTIVE")
-                        .build();
-                userRepository.save(admission);
+
 
                 // 4. Seed Faculty
                 User facultyUser = User.builder()

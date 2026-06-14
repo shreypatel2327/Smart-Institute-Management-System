@@ -33,6 +33,16 @@ public class Notification {
     @JoinColumn(name = "sent_by_id", nullable = false)
     private User sentBy;
 
+    @Column(name = "attachment_url")
+    private String attachmentUrl;
+
+    @Column(name = "attachment_type")
+    private String attachmentType; // e.g. IMAGE, AUDIO, VIDEO, PDF, FILE
+
+    @ManyToOne
+    @JoinColumn(name = "batch_id")
+    private Batch batch;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

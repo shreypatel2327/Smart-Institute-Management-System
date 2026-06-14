@@ -95,9 +95,6 @@ public class AuthController {
                 case "FACULTY":
                     role = Role.ROLE_FACULTY;
                     break;
-                case "ADMISSION":
-                    role = Role.ROLE_ADMISSION;
-                    break;
                 default:
                     role = Role.ROLE_STUDENT;
             }

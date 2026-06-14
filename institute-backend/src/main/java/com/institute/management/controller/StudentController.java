@@ -116,11 +116,61 @@ public class StudentController {
         return ResponseEntity.ok(onlineClassRepository.findByBatch(student.getBatch()));
     }
 
+    @GetMapping("/feedback/status")
+    public ResponseEntity<?> getFeedbackStatus(@RequestParam(value = "mockWeekend", defaultValue = "false") boolean mockWeekend) {
+        Student student = getCurrentStudent();
+        java.time.DayOfWeek day = java.time.LocalDate.now().getDayOfWeek();
+        boolean isWeekend = (day == java.time.DayOfWeek.SATURDAY || day == java.time.DayOfWeek.SUNDAY) || mockWeekend;
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfWeek = now.with(java.time.temporal.TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY))
+                .withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endOfWeek = startOfWeek.plusDays(7).minusNanos(1);
+
+        List<Feedback> list = feedbackRepository.findAll();
+        boolean alreadySubmitted = list.stream()
+                .anyMatch(f -> f.getStudent().getId().equals(student.getId()) &&
+                               f.getCreatedAt() != null &&
+                               f.getCreatedAt().isAfter(startOfWeek) &&
+                               f.getCreatedAt().isBefore(endOfWeek));
+
+        Map<String, Object> status = new HashMap<>();
+        status.put("isWeekend", isWeekend);
+        status.put("alreadySubmitted", alreadySubmitted);
+        status.put("allowedToSubmit", isWeekend && !alreadySubmitted);
+        status.put("startOfWeek", startOfWeek);
+        status.put("endOfWeek", endOfWeek);
+
+        return ResponseEntity.ok(status);
+    }
+
     @PostMapping("/feedback")
-    public ResponseEntity<?> submitFeedback(@RequestBody Feedback feedbackInput) {
+    public ResponseEntity<?> submitFeedback(@RequestBody Feedback feedbackInput,
+                                             @RequestParam(value = "mockWeekend", defaultValue = "false") boolean mockWeekend) {
         Student student = getCurrentStudent();
         if (student.getBatch() == null) {
             return ResponseEntity.badRequest().body("Student is not assigned to any batch");
+        }
+
+        java.time.DayOfWeek day = java.time.LocalDate.now().getDayOfWeek();
+        boolean isWeekend = (day == java.time.DayOfWeek.SATURDAY || day == java.time.DayOfWeek.SUNDAY) || mockWeekend;
+        if (!isWeekend) {
+            return ResponseEntity.badRequest().body("Error: Weekly feedback can only be submitted on weekends (Saturday and Sunday).");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfWeek = now.with(java.time.temporal.TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY))
+                .withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endOfWeek = startOfWeek.plusDays(7).minusNanos(1);
+
+        List<Feedback> list = feedbackRepository.findAll();
+        boolean alreadySubmitted = list.stream()
+                .anyMatch(f -> f.getStudent().getId().equals(student.getId()) &&
+                               f.getCreatedAt() != null &&
+                               f.getCreatedAt().isAfter(startOfWeek) &&
+                               f.getCreatedAt().isBefore(endOfWeek));
+        if (alreadySubmitted) {
+            return ResponseEntity.badRequest().body("Error: You have already submitted weekly feedback for this week.");
         }
 
         Feedback feedback = Feedback.builder()

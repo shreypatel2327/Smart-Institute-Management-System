@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../../components/DashboardLayout';
 import { api } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const OnlineClass = () => {
     const [meetings, setMeetings] = useState([]);
@@ -48,14 +49,12 @@ const OnlineClass = () => {
                                 </div>
 
                                 <div className="mt-6">
-                                    <a
-                                        href={item.meetingLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <Link
+                                        to={`/shared/online-classroom?meetingId=${item.meetingId}&title=${encodeURIComponent(item.title)}`}
                                         className="w-full inline-flex items-center justify-center py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 text-xs font-bold rounded-xl shadow-lg shadow-emerald-500/10 transition-all"
                                     >
                                         Join Video Room
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         ))}

@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Feedback = () => {
     const [profile, setProfile] = useState(null);
+    const [allowedToSubmit, setAllowedToSubmit] = useState(false);
+    const [statusReason, setStatusReason] = useState('');
     const [topicExplanation, setTopicExplanation] = useState(5);
     const [subjectKnowledge, setSubjectKnowledge] = useState(5);
     const [communicationSkills, setCommunicationSkills] = useState(5);
@@ -16,10 +18,26 @@ const Feedback = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api.get('/api/students/profile')
-            .then(res => setProfile(res.data))
-            .catch(err => console.error('Error loading profile', err))
-            .finally(() => setLoading(false));
+        const loadFeedbackStatusAndProfile = async () => {
+            try {
+                const profileRes = await api.get('/api/students/profile');
+                setProfile(profileRes.data);
+
+                const statusRes = await api.get('/api/students/feedback/status');
+                setAllowedToSubmit(statusRes.data.allowedToSubmit);
+
+                if (statusRes.data.alreadySubmitted) {
+                    setStatusReason("You have already submitted your faculty performance evaluation for this week. Feedback can only be submitted once per week.");
+                } else if (!statusRes.data.isWeekend) {
+                    setStatusReason("Weekly faculty performance evaluation is only open on weekends (Saturday & Sunday). Please return during the weekend to submit feedback.");
+                }
+            } catch (err) {
+                console.error('Error loading feedback status and profile', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadFeedbackStatusAndProfile();
     }, []);
 
     const handleSubmit = async (e) => {
@@ -43,6 +61,12 @@ const Feedback = () => {
             toast.success("Thank you! Your weekly feedback was recorded.");
             // Reset
             setComments('');
+            // Refresh feedback status to disable form
+            const statusRes = await api.get('/api/students/feedback/status');
+            setAllowedToSubmit(statusRes.data.allowedToSubmit);
+            if (statusRes.data.alreadySubmitted) {
+                setStatusReason("You have already submitted your faculty performance evaluation for this week. Feedback can only be submitted once per week.");
+            }
         } catch (error) {
             toast.error("Error submitting feedback: " + (error.response?.data || error.message));
         } finally {
@@ -74,6 +98,14 @@ const Feedback = () => {
                 ) : !profile?.batch?.faculty ? (
                     <div className="text-center py-12 text-slate-500 text-sm">
                         You have not been assigned to a Batch/Faculty yet. Feedback submission is disabled.
+                    </div>
+                ) : !allowedToSubmit ? (
+                    <div className="p-6 bg-slate-950 border border-slate-800 rounded-xl text-center">
+                        <span className="text-3xl block mb-2">🗓️</span>
+                        <h4 className="font-bold text-white text-sm">Feedback Currently Unavailable</h4>
+                        <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                            {statusReason || "Weekly performance feedback is only open on weekends (Saturday & Sunday) and can only be submitted once per week."}
+                        </p>
                     </div>
                 ) : (
                     <form onSubmit={handleSubmit} className="space-y-6 text-left">

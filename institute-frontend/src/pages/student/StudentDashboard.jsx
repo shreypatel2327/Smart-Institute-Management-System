@@ -7,6 +7,7 @@ const StudentDashboard = () => {
     const [profile, setProfile] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [lectures, setLectures] = useState([]);
+    const [allowedToSubmit, setAllowedToSubmit] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -23,6 +24,10 @@ const StudentDashboard = () => {
                 // Fetch student online classes
                 const classRes = await api.get('/api/students/online-classes');
                 setLectures(classRes.data);
+
+                // Fetch student feedback status
+                const statusRes = await api.get('/api/students/feedback/status');
+                setAllowedToSubmit(statusRes.data.allowedToSubmit);
             } catch (error) {
                 console.error('Error fetching student dashboard info', error);
             } finally {
@@ -45,6 +50,27 @@ const StudentDashboard = () => {
 
     return (
         <DashboardLayout title="Welcome back to your Study Desk">
+            {/* Feedback reminder banner */}
+            {allowedToSubmit && (
+                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 mb-6 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                        <span className="text-2xl">📝</span>
+                        <div>
+                            <h4 className="font-bold text-emerald-400 text-sm">Weekly Faculty Feedback</h4>
+                            <p className="text-xs text-emerald-200/70 mt-0.5">
+                                Weekly faculty performance evaluation is now open. Please take a minute to share your feedback.
+                            </p>
+                        </div>
+                    </div>
+                    <Link
+                        to="/student/feedback"
+                        className="px-4 py-1.5 bg-emerald-500 text-slate-950 font-extrabold text-xs rounded-xl hover:bg-emerald-400 transition-colors text-center w-full sm:w-auto"
+                    >
+                        Give Feedback
+                    </Link>
+                </div>
+            )}
+
             {/* Top overview cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center gap-5">

@@ -90,7 +90,7 @@ const StaffManagement = () => {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 mb-6 gap-4">
                     <div className="text-left">
                         <h3 className="text-base font-bold text-white">Staff Management Console</h3>
-                        <p className="text-xs text-slate-500 mt-1">Enroll Admin officers or Admission Department leads, and control portal statuses</p>
+                        <p className="text-xs text-slate-500 mt-1">Enroll Admin officers and control portal statuses</p>
                     </div>
                     <button
                         onClick={() => { resetForm(); setIsCreateOpen(true); }}
@@ -248,14 +248,12 @@ const StaffManagement = () => {
                                 </div>
                                 <div>
                                     <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Clearance Role *</label>
-                                    <select
-                                        value={role}
-                                        onChange={(e) => setRole(e.target.value)}
-                                        className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs"
-                                    >
-                                        <option value="ROLE_ADMIN">ADMIN OFFICER</option>
-                                        <option value="ROLE_ADMISSION">ADMISSION COUNSELLOR</option>
-                                    </select>
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        value="ADMIN OFFICER"
+                                        className="w-full px-3 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-slate-500 text-xs focus:outline-none cursor-not-allowed"
+                                    />
                                 </div>
                             </div>
 
